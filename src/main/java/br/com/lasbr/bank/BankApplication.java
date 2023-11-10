@@ -59,6 +59,9 @@ import java.util.Set;
             var valor = sc.nextBigDecimal();
 
             service.realizarSaque(numeroDaConta, valor);
+            System.out.println("Saque realizado com sucesso!");
+            System.out.println("Pressione qualquer tecla e de ENTER para voltar ao menu principal.");
+            sc.next();
         }
 
         private static void consultarSaldo() {
