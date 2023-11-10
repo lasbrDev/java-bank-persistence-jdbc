@@ -109,6 +109,9 @@ import java.util.Set;
             var email = sc.next();
 
             service.abrir(new DadosAberturaConta(numeroDaConta, new DadosCadastroCliente(nome, cpf, email)));
+            System.out.println("Conta aberta com sucesso!");
+            System.out.println("Pressione qualquer tecla e de ENTER para voltar ao menu principal.");
+            sc.next();
         }
 
         private static void listarContas() {
