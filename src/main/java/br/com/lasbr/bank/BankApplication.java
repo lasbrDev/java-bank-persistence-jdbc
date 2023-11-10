@@ -35,9 +35,9 @@ import java.util.Set;
                         case 4:
                             consultarSaldo();
                             break;
-//                        case 5:
-//                            realizarSaque();
-//                            break;
+                        case 5:
+                            realizarSaque();
+                            break;
 //                        case 6:
 //                            realizarDeposito();
 //                            break;
@@ -49,6 +49,19 @@ import java.util.Set;
                 }
                 opcao = exibirMenu();
             }
+        }
+
+        private static void realizarSaque() {
+            System.out.println("Digite o número da conta:");
+            var numeroDaConta = sc.nextInt();
+
+            System.out.println("Digite o valor do saque:");
+            var valor = sc.nextBigDecimal();
+
+            service.realizarSaque(numeroDaConta, valor);
+            System.out.println("Saque realizado com sucesso!");
+            System.out.println("Pressione qualquer tecla e de ENTER para voltar ao menu principal.");
+            sc.next();
         }
 
         private static void consultarSaldo() {
