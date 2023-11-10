@@ -35,12 +35,12 @@ import java.util.Set;
                         case 4:
                             consultarSaldo();
                             break;
-                        case 5:
-                            realizarSaque();
-                            break;
-                        case 6:
-                            realizarDeposito();
-                            break;
+//                        case 5:
+//                            realizarSaque();
+//                            break;
+//                        case 6:
+//                            realizarDeposito();
+//                            break;
                     }
                 } catch (RegraDeNegocioException e) {
                     System.out.println("Erro: " +e.getMessage());
@@ -49,6 +49,16 @@ import java.util.Set;
                 }
                 opcao = exibirMenu();
             }
+        }
+
+        private static void encerrarConta() {
+            System.out.println("Digite o número da conta:");
+            var numeroDaConta = sc.nextInt();
+
+            service.encerrar(numeroDaConta);
+            System.out.println("Conta encerrada com sucesso!");
+            System.out.println("Pressione qualquer tecla e de ENTER para voltar ao menu principal.");
+            sc.close();
         }
 
         private static void abrirConta() {
