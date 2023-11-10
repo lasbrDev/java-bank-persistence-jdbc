@@ -51,6 +51,13 @@ import java.util.Set;
             }
         }
 
+        private static void encerrarConta() {
+            System.out.println("Digite o número da conta:");
+            var numeroDaConta = sc.nextInt();
+
+            service.encerrar(numeroDaConta);
+        }
+
         private static void abrirConta() {
             System.out.println("Digite o número da conta");
             var numeroDaConta = sc.nextInt();

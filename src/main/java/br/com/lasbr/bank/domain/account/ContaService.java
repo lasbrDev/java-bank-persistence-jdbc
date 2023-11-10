@@ -23,4 +23,19 @@ import java.util.Set;
 
             contas.add(conta);
         }
+
+        public void encerrar(Integer numeroDaConta) {
+            var conta = buscarContaPorNumero(numeroDaConta);
+            if (conta.possuiSaldo()) {
+                throw new RegraDeNegocioException("Conta não pode ser encerrada pois ainda possui saldo!");
+            }
+        }
+
+        private Conta buscarContaPorNumero(Integer numero) {
+            return contas
+                    .stream()
+                    .filter(c -> c.getNumero() == numero)
+                    .findFirst()
+                    .orElseThrow(() -> new RegraDeNegocioException("Não existe conta cadastrada com esse número!"));
+        }
     }

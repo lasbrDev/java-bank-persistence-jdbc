@@ -50,4 +50,8 @@ import java.util.Objects;
         public Cliente getTitular() {
             return titular;
         }
+
+        public boolean possuiSaldo() {
+            return this.saldo.compareTo(BigDecimal.ZERO) != 0;
+        }
     }
