@@ -1,14 +1,14 @@
-package br.com.lasbr.bank.domain.client;
+package br.com.lasbr.bank.domain.costumer;
 
 import java.util.Objects;
 
-    public class Clliente {
+    public class Cliente {
 
         private String nome;
         private String cpf;
         private String email;
 
-        public Clliente(String nome, String cpf, String email) {
+        public Cliente(String nome, String cpf, String email) {
             this.nome = nome;
             this.cpf = cpf;
             this.email = email;
@@ -30,7 +30,7 @@ import java.util.Objects;
         public boolean equals(Object object) {
             if (this == object) return true;
             if (object == null || getClass() != object.getClass()) return false;
-            Clliente clliente = (Clliente) object;
+            Cliente clliente = (Cliente) object;
             return cpf.equals(clliente.cpf);
         }
 
