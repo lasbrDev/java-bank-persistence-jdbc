@@ -14,6 +14,12 @@ import java.util.Objects;
             this.email = email;
         }
 
+        public Cliente(DadosCadastroCliente dados) {
+            this.nome = dados.nome();
+            this.cpf = dados.cpf();
+            this.email = dados.email();
+        }
+
         public String getNome() {
             return nome;
         }

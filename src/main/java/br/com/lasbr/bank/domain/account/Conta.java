@@ -11,10 +11,10 @@ import java.util.Objects;
         private BigDecimal saldo;
         private Cliente titular;
 
-        public Conta(Integer numero, BigDecimal saldo, Cliente titular) {
+        public Conta(Integer numero, Cliente titular) {
             this.numero = numero;
-            this.saldo = saldo;
             this.titular = titular;
+            this.saldo = BigDecimal.ZERO;
         }
 
         @Override

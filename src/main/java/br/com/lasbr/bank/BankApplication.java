@@ -4,6 +4,8 @@ package br.com.lasbr.bank;
 import br.com.lasbr.bank.domain.RegraDeNegocioException;
 import br.com.lasbr.bank.domain.account.Conta;
 import br.com.lasbr.bank.domain.account.ContaService;
+import br.com.lasbr.bank.domain.account.DadosAberturaConta;
+import br.com.lasbr.bank.domain.costumer.DadosCadastroCliente;
 
 import java.math.BigDecimal;
 import java.util.HashSet;
@@ -47,6 +49,19 @@ import java.util.Set;
                 }
                 opcao = exibirMenu();
             }
+        }
+
+        private static void abrirConta() {
+            System.out.println("Digite o número da conta");
+            var numeroDaConta = sc.nextInt();
+            System.out.println("Digite o nome do cliente");
+            var nome = sc.next();
+            System.out.println("Digite o cpf do cliente");
+            var cpf = sc.next();
+            System.out.println("Digite o email do cliente");
+            var email = sc.next();
+
+            service.abrir(new DadosAberturaConta(numeroDaConta, new DadosCadastroCliente(nome, cpf, email)));
         }
 
         private static void listarContas() {
