@@ -58,4 +58,8 @@ import java.util.Objects;
         public void sacar(BigDecimal valor) {
             this.saldo = this.saldo.subtract(valor);
         }
+
+        public void depositar(BigDecimal valor) {
+            this.saldo = this.saldo.add(valor);
+        }
     }

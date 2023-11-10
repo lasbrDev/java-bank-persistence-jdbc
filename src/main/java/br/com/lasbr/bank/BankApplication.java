@@ -38,9 +38,9 @@ import java.util.Set;
                         case 5:
                             realizarSaque();
                             break;
-//                        case 6:
-//                            realizarDeposito();
-//                            break;
+                        case 6:
+                            realizarDeposito();
+                            break;
                     }
                 } catch (RegraDeNegocioException e) {
                     System.out.println("Erro: " +e.getMessage());
@@ -49,6 +49,20 @@ import java.util.Set;
                 }
                 opcao = exibirMenu();
             }
+        }
+
+        private static void realizarDeposito() {
+            System.out.println("Digite o número da conta:");
+            var numeroDaConta = sc.nextInt();
+
+            System.out.println("Digite o valor do depósito:");
+            var valor = sc.nextBigDecimal();
+
+            service.realizarDeposito(numeroDaConta, valor);
+
+            System.out.println("Depósito realizado com sucesso");
+            System.out.println("Pressione qualquer tecla e de ENTER para voltar ao menu principal.");
+            sc.next();
         }
 
         private static void realizarSaque() {

@@ -57,4 +57,13 @@ import java.util.Set;
 
             conta.sacar(valor);
         }
+
+        public void realizarDeposito(Integer numeroDaConta, BigDecimal valor) {
+            var conta = buscarContaPorNumero(numeroDaConta);
+            if (valor.compareTo(BigDecimal.ZERO) <= 0) {
+                throw new RegraDeNegocioException("Valor do deposito deve ser superior a zero!");
+            }
+
+            conta.depositar(valor);
+        }
     }
