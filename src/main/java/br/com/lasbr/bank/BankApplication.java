@@ -51,6 +51,16 @@ import java.util.Set;
             }
         }
 
+        private static void consultarSaldo() {
+            System.out.println("Digite o número da conta:");
+            var numeroDaConta = sc.nextInt();
+            var saldo = service.consultarSaldo(numeroDaConta);
+            System.out.println("Saldo da conta: " +saldo);
+
+            System.out.println("Pressione qualquer tecla e de ENTER para voltar ao menu principal.");
+            sc.next();
+        }
+
         private static void encerrarConta() {
             System.out.println("Digite o número da conta:");
             var numeroDaConta = sc.nextInt();

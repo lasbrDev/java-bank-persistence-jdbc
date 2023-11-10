@@ -3,6 +3,7 @@ package br.com.lasbr.bank.domain.account;
 import br.com.lasbr.bank.domain.RegraDeNegocioException;
 import br.com.lasbr.bank.domain.costumer.Cliente;
 
+import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -37,5 +38,10 @@ import java.util.Set;
                     .filter(c -> c.getNumero() == numero)
                     .findFirst()
                     .orElseThrow(() -> new RegraDeNegocioException("Não existe conta cadastrada com esse número!"));
+        }
+
+        public BigDecimal consultarSaldo(Integer numeroDaConta) {
+            var conta = buscarContaPorNumero(numeroDaConta);
+            return conta.getSaldo();
         }
     }
