@@ -44,4 +44,17 @@ import java.util.Set;
             var conta = buscarContaPorNumero(numeroDaConta);
             return conta.getSaldo();
         }
+
+        public void realizarSaque(Integer numeroDaConta, BigDecimal valor) {
+            var conta = buscarContaPorNumero(numeroDaConta);
+            if (valor.compareTo(BigDecimal.ZERO) <= 0) {
+                throw new RegraDeNegocioException("Valor do saque deve ser superior a zero!");
+            }
+
+            if (valor.compareTo(conta.getSaldo()) > 0) {
+                throw new RegraDeNegocioException("Saldo insuficiente!");
+            }
+
+            conta.sacar(valor);
+        }
     }

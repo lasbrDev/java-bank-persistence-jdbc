@@ -54,4 +54,8 @@ import java.util.Objects;
         public boolean possuiSaldo() {
             return this.saldo.compareTo(BigDecimal.ZERO) != 0;
         }
+
+        public void sacar(BigDecimal valor) {
+            this.saldo = this.saldo.subtract(valor);
+        }
     }
