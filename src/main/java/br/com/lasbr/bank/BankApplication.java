@@ -1,11 +1,20 @@
 package br.com.lasbr.bank;
 
 
+import br.com.lasbr.bank.domain.RegraDeNegocioException;
+import br.com.lasbr.bank.domain.account.Conta;
+import br.com.lasbr.bank.domain.account.ContaService;
+
+import java.math.BigDecimal;
+import java.util.HashSet;
 import java.util.Scanner;
+import java.util.Set;
 
     public class BankApplication {
 
         private  static Scanner sc = new Scanner(System.in).useDelimiter("\n");
+        private static ContaService service = new ContaService();
+
         public static void main(String[] args) {
 
             var opcao = exibirMenu();
@@ -32,9 +41,21 @@ import java.util.Scanner;
                             break;
                     }
                 } catch (RegraDeNegocioException e) {
-
+                    System.out.println("Erro: " +e.getMessage());
+                    System.out.println("Pressione qualquer tecla e de ENTER para voltar ao menu.");
+                    sc.next();
                 }
+                opcao = exibirMenu();
             }
+        }
+
+        private static void listarContas() {
+            System.out.println("Contas Cadastradas:");
+            var contas = service.listarContasAbertas();
+            contas.stream().forEach(System.out::println);
+
+            System.out.println("Pressione qualquer tecla e de ENTER para voltar ao menu principal.");
+            sc.next();
         }
 
         private static int exibirMenu() {
