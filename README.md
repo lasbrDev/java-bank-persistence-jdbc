@@ -68,14 +68,14 @@ O banco de dados utilizado é o MySQL, e a configuração está definida no arqu
 version: '3.8'
 
 services:
-mysql:
-image: mysql:8.0.28
-environment:
-MYSQL_ROOT_PASSWORD: root
-MYSQL_DATABASE: my_mysql_db
-MYSQL_PASSWORD: root
-ports:
-- 3307:3306
+  mysql:
+    image: mysql:8.0.28
+    environment:
+        MYSQL_ROOT_PASSWORD: root
+        MYSQL_DATABASE: my_mysql_db
+        MYSQL_PASSWORD: root
+    ports:
+      - 3307:3306
 ```
 
 Abaixo, estão os comandos para rodar a instância do MySQL no Docker:
