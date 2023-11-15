@@ -21,7 +21,7 @@ import java.util.Set;
 
         public void salvar(DadosAberturaConta dadosDaConta) {
             var cliente = new Cliente(dadosDaConta.dadosCliente());
-            var conta = new Conta(dadosDaConta.numero(), cliente);
+            var conta = new Conta(dadosDaConta.numero(), BigDecimal.ZERO, cliente);
 
             String sql = "INSERT INTO conta (numero, saldo, cliente_nome, cliente_cpf, cliente_email) " +
                     " VALUES (?, ?, ?, ?, ?) ";
@@ -63,7 +63,7 @@ import java.util.Set;
                     String email = resultSet.getNString(5);
                     DadosCadastroCliente dados = new DadosCadastroCliente(nome, cpf, email);
                     Cliente cliente = new Cliente(dados);
-                    contas.add(new Conta(numero, cliente));
+                    contas.add(new Conta(numero, saldo, cliente));
                 }
                 statement.close();
                 resultSet.close();
@@ -73,5 +73,36 @@ import java.util.Set;
                 throw new RuntimeException(e);
             }
             return contas;
+        }
+
+        public Conta listarPorNumero(Integer numero) {
+            String sql = "SELECT * FROM conta WHEHRE numero = ?";
+
+            PreparedStatement statement;
+            ResultSet resultSet;
+            Conta conta = null;
+            try {
+                statement = conn.prepareStatement(sql);
+                statement.setInt(1, numero);
+                resultSet = statement.executeQuery();
+
+                while (resultSet.next()) {
+                    Integer numeroRecuperado = resultSet.getInt(1);
+                    BigDecimal saldo = resultSet.getBigDecimal(2);
+                    String nome = resultSet.getString(3);
+                    String cpf = resultSet.getNString(4);;
+                    String email = resultSet.getNString(5);
+
+                    DadosCadastroCliente dados = new DadosCadastroCliente(nome, cpf, email);
+                    Cliente cliente = new Cliente(dados);
+
+                }
+                resultSet.close();
+                statement.close();
+                conn.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            return conta;
         }
     }
