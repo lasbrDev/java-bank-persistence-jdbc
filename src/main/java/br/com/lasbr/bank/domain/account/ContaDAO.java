@@ -35,6 +35,8 @@ import java.util.Set;
                 statement.setString(4,dadosDaConta.dadosCliente().cpf());
                 statement.setString(5,dadosDaConta.dadosCliente().email());
                 statement.execute();
+                statement.close();
+                conn.close();
 
             } catch (SQLException e) {
                 throw new RuntimeException(e);
@@ -42,14 +44,16 @@ import java.util.Set;
         }
 
         public Set<Conta> listar() {
+            PreparedStatement statement;
+            ResultSet resultSet;
             Set<Conta> contas = new HashSet<>();
 
             String sql = "SELECT * FROM conta";
 
 
             try {
-                PreparedStatement ps = conn.prepareStatement(sql);
-                ResultSet resultSet = ps.executeQuery();
+                statement = conn.prepareStatement(sql);
+                resultSet = statement.executeQuery();
 
                 while (resultSet.next()) {
                     Integer numero = resultSet.getInt(1);
@@ -61,6 +65,10 @@ import java.util.Set;
                     Cliente cliente = new Cliente(dados);
                     contas.add(new Conta(numero, cliente));
                 }
+                statement.close();
+                resultSet.close();
+                conn.close();
+
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
