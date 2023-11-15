@@ -25,31 +25,9 @@ import java.util.Set;
         }
 
         public void abrir(DadosAberturaConta dadosDaConta) {
-            var cliente = new Cliente(dadosDaConta.dadosCliente());
-            var conta = new Conta(dadosDaConta.numero(), cliente);
-            if (contas.contains(conta)) {
-                throw new RegraDeNegocioException("Já existe outra conta aberta com o mesmo número!");
-            }
-
-            String sql = "INSERT INTO conta (numero, saldo, cliente_nome, cliente_cpf, cliente_email) " +
-                    " VALUES (?, ?, ?, ?, ?) ";
 
             Connection conn = connection.recuperarConexao();
-
-            try {
-                PreparedStatement statement = conn.prepareStatement(sql);
-
-                statement.setInt(1,conta.getNumero());
-                statement.setBigDecimal(2, BigDecimal.ZERO);
-                statement.setString(3, dadosDaConta.dadosCliente().nome());
-                statement.setString(4,dadosDaConta.dadosCliente().cpf());
-                statement.setString(5,dadosDaConta.dadosCliente().email());
-
-                statement.execute();
-
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
+            new ContaDAO(conn).salvar(dadosDaConta);
         }
 
         public void encerrar(Integer numeroDaConta) {
