@@ -21,7 +21,8 @@ import java.util.Set;
         private Set<Conta> contas = new HashSet<>();
 
         public Set<Conta> listarContasAbertas() {
-            return contas;
+            Connection conn = connection.recuperarConexao();
+            return new ContaDAO(conn).listar();
         }
 
         public void abrir(DadosAberturaConta dadosDaConta) {
