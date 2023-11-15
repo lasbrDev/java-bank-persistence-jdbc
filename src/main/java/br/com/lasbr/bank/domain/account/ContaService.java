@@ -39,11 +39,13 @@ import java.util.Set;
         }
 
         private Conta buscarContaPorNumero(Integer numero) {
-            return contas
-                    .stream()
-                    .filter(c -> c.getNumero() == numero)
-                    .findFirst()
-                    .orElseThrow(() -> new RegraDeNegocioException("Não existe conta cadastrada com esse número!"));
+            Connection conn = connection.recuperarConexao();
+            Conta conta = new ContaDAO(conn).listarPorNumero(numero);
+            if (conta!= null) {
+                return conta;
+            } else {
+                throw new RegraDeNegocioException("Não existe conta cadastrada com esse número!");
+            }
         }
 
         public BigDecimal consultarSaldo(Integer numeroDaConta) {

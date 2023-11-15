@@ -21,7 +21,7 @@ import java.util.Set;
 
         public void salvar(DadosAberturaConta dadosDaConta) {
             var cliente = new Cliente(dadosDaConta.dadosCliente());
-            var conta = new Conta(dadosDaConta.numero(), saldo, cliente);
+            var conta = new Conta(dadosDaConta.numero(), BigDecimal.ZERO, cliente);
 
             String sql = "INSERT INTO conta (numero, saldo, cliente_nome, cliente_cpf, cliente_email) " +
                     " VALUES (?, ?, ?, ?, ?) ";
@@ -95,7 +95,7 @@ import java.util.Set;
 
                     DadosCadastroCliente dados = new DadosCadastroCliente(nome, cpf, email);
                     Cliente cliente = new Cliente(dados);
-                    conta = new Conta(numeroRecuperado, saldo, cliente);
+
                 }
                 resultSet.close();
                 statement.close();

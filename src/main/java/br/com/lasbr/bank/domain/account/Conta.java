@@ -13,8 +13,8 @@ import java.util.Objects;
 
         public Conta(Integer numero, BigDecimal saldo, Cliente titular) {
             this.numero = numero;
-            this.titular = titular;
             this.saldo = BigDecimal.ZERO;
+            this.titular = titular;
         }
 
         @Override
