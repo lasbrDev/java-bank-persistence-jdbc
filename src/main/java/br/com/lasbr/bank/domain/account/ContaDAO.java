@@ -21,7 +21,7 @@ import java.util.Set;
 
         public void salvar(DadosAberturaConta dadosDaConta) {
             var cliente = new Cliente(dadosDaConta.dadosCliente());
-            var conta = new Conta(dadosDaConta.numero(), BigDecimal.ZERO, cliente);
+            var conta = new Conta(dadosDaConta.numero(), BigDecimal.ZERO, cliente, true);
 
             String sql = " INSERT INTO conta (numero, saldo, cliente_nome, cliente_cpf, cliente_email) " +
                     " VALUES (?, ?, ?, ?, ?) ";
@@ -34,6 +34,7 @@ import java.util.Set;
                 statement.setString(3, dadosDaConta.dadosCliente().nome());
                 statement.setString(4,dadosDaConta.dadosCliente().cpf());
                 statement.setString(5,dadosDaConta.dadosCliente().email());
+                statement.setBoolean(6, true);
                 statement.execute();
                 statement.close();
                 conn.close();
@@ -48,7 +49,7 @@ import java.util.Set;
             ResultSet resultSet;
             Set<Conta> contas = new HashSet<>();
 
-            String sql = " SELECT * FROM conta ";
+            String sql = " SELECT * FROM conta WHERE esta_ativa = true ";
 
 
             try {
@@ -61,9 +62,11 @@ import java.util.Set;
                     String nome = resultSet.getNString(3);
                     String cpf = resultSet.getNString(4);
                     String email = resultSet.getNString(5);
+                    Boolean estaAtiva = resultSet.getBoolean(6);
+
                     DadosCadastroCliente dados = new DadosCadastroCliente(nome, cpf, email);
                     Cliente cliente = new Cliente(dados);
-                    contas.add(new Conta(numero, saldo, cliente));
+                    contas.add(new Conta(numero, saldo, cliente, estaAtiva));
                 }
                 statement.close();
                 resultSet.close();
@@ -76,7 +79,7 @@ import java.util.Set;
         }
 
         public Conta listarPorNumero(Integer numero) {
-            String sql = " SELECT * FROM conta WHERE numero = ? ";
+            String sql = " SELECT * FROM conta WHERE numero = ? and esta_ativa  = true ";
 
             PreparedStatement statement;
             ResultSet resultSet;
@@ -92,10 +95,11 @@ import java.util.Set;
                     String nome = resultSet.getString(3);
                     String cpf = resultSet.getNString(4);;
                     String email = resultSet.getNString(5);
+                    Boolean estaAtiva = resultSet.getBoolean(6);
 
                     DadosCadastroCliente dados = new DadosCadastroCliente(nome, cpf, email);
                     Cliente cliente = new Cliente(dados);
-                    conta = new Conta(numeroRecuperado, saldo, cliente);
+                    conta = new Conta(numeroRecuperado, saldo, cliente, estaAtiva);
                 }
                 resultSet.close();
                 statement.close();
@@ -133,6 +137,20 @@ import java.util.Set;
                 conn.close();
             } catch (SQLException e) {
                 throw new RuntimeException(e);
+            }
+        }
+
+        public void alterarLogico(Integer numeroDaConta) {
+            PreparedStatement statement;
+            String sql = " UPDATE conta SET esta_ativa = false WHERE numero = ? ";
+
+            try {
+                statement = conn.prepareStatement(sql);
+                statement.setInt(1, numeroDaConta);
+                statement.execute();
+                conn.close();
+            } catch (SQLException e) {
+                throw new RuntimeException();
             }
         }
     }

@@ -10,11 +10,13 @@ import java.util.Objects;
         private Integer numero;
         private BigDecimal saldo;
         private Cliente titular;
+        private Boolean estaAtiva;
 
-        public Conta(Integer numero, BigDecimal saldo, Cliente titular) {
+        public Conta(Integer numero, BigDecimal saldo, Cliente titular, Boolean estaAtiva) {
             this.numero = numero;
             this.saldo = saldo;
             this.titular = titular;
+            this.estaAtiva = estaAtiva;
         }
 
         @Override
@@ -57,5 +59,9 @@ import java.util.Objects;
 
         public void sacar(BigDecimal valor) {
             this.saldo = this.saldo.subtract(valor);
+        }
+
+        public Boolean getEstaAtiva() {
+            return estaAtiva;
         }
     }
