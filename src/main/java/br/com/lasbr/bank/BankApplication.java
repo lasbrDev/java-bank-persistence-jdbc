@@ -111,7 +111,7 @@ import java.util.Set;
             service.encerrar(numeroDaConta);
             System.out.println("Conta encerrada com sucesso!");
             System.out.println("Pressione qualquer tecla e de ENTER para voltar ao menu principal.");
-            sc.close();
+            sc.next();
         }
 
         private static void abrirConta() {
@@ -151,6 +151,7 @@ import java.util.Set;
                     7 -> Realizar Transferência
                     8 -> Sair
                     """);
+
             return sc.nextInt();
         }
     }

@@ -2,13 +2,9 @@ package br.com.lasbr.bank.domain.account;
 
 import br.com.lasbr.bank.ConnectionFactory;
 import br.com.lasbr.bank.domain.RegraDeNegocioException;
-import br.com.lasbr.bank.domain.costumer.Cliente;
 
 import java.math.BigDecimal;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.util.HashSet;
 import java.util.Set;
 
     public class ContaService {
@@ -17,8 +13,6 @@ import java.util.Set;
         public ContaService() {
             this.connection = new ConnectionFactory();
         }
-
-        private Set<Conta> contas = new HashSet<>();
 
         private void alterar(Conta conta, BigDecimal valor) {
             Connection conn = connection.recuperarConexao();
@@ -41,7 +35,9 @@ import java.util.Set;
             if (conta.possuiSaldo()) {
                 throw new RegraDeNegocioException("Conta não pode ser encerrada pois ainda possui saldo!");
             }
-            contas.remove(conta);
+
+            Connection conn = connection.recuperarConexao();
+            new ContaDAO(conn).deletar(numeroDaConta);
         }
 
         private Conta buscarContaPorNumero(Integer numero) {

@@ -122,4 +122,17 @@ import java.util.Set;
                 throw new RuntimeException(e);
             }
         }
+
+        public void deletar(Integer numeroDaConta) {
+            String sql = " DELETE FROM conta WHERE numero = ? ";
+            try {
+                PreparedStatement statement = conn.prepareStatement(sql);
+                statement.setInt(1, numeroDaConta);
+                statement.execute();
+                statement.close();
+                conn.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
