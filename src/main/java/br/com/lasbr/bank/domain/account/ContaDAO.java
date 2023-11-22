@@ -109,7 +109,8 @@ import java.util.Set;
         public void alterar(Integer numero, BigDecimal valor) {
             PreparedStatement  statement;
 
-            String sql = "UPDATE conta SET saldo = ? WHERE numero = ? ";
+            String sql = "UPDATE conta SET saldo = saldo + ? WHERE numero = ? ";
+
 
 
             try {
