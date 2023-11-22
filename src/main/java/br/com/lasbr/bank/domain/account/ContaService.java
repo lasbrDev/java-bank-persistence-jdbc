@@ -20,6 +20,11 @@ import java.util.Set;
 
         private Set<Conta> contas = new HashSet<>();
 
+        private void alterar(Conta conta, BigDecimal valor) {
+            Connection conn = connection.recuperarConexao();
+            new ContaDAO(conn).alterar(conta.getNumero(), valor);
+        }
+
         public Set<Conta> listarContasAbertas() {
             Connection conn = connection.recuperarConexao();
             return new ContaDAO(conn).listar();
@@ -36,6 +41,7 @@ import java.util.Set;
             if (conta.possuiSaldo()) {
                 throw new RegraDeNegocioException("Conta não pode ser encerrada pois ainda possui saldo!");
             }
+            contas.remove(conta);
         }
 
         private Conta buscarContaPorNumero(Integer numero) {
@@ -63,7 +69,8 @@ import java.util.Set;
                 throw new RegraDeNegocioException("Saldo insuficiente!");
             }
 
-            conta.sacar(valor);
+            BigDecimal novoValor = conta.getSaldo().subtract(valor);
+            alterar(conta, novoValor);
         }
 
         public void realizarDeposito(Integer numeroDaConta, BigDecimal valor) {
@@ -72,6 +79,6 @@ import java.util.Set;
                 throw new RegraDeNegocioException("Valor do deposito deve ser superior a zero!");
             }
 
-            conta.depositar(valor);
+            alterar(conta, valor);
         }
     }

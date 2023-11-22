@@ -13,7 +13,7 @@ import java.util.Objects;
 
         public Conta(Integer numero, BigDecimal saldo, Cliente titular) {
             this.numero = numero;
-            this.saldo = BigDecimal.ZERO;
+            this.saldo = saldo;
             this.titular = titular;
         }
 
@@ -57,9 +57,5 @@ import java.util.Objects;
 
         public void sacar(BigDecimal valor) {
             this.saldo = this.saldo.subtract(valor);
-        }
-
-        public void depositar(BigDecimal valor) {
-            this.saldo = this.saldo.add(valor);
         }
     }

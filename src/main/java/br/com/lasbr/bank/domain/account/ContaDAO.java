@@ -23,7 +23,7 @@ import java.util.Set;
             var cliente = new Cliente(dadosDaConta.dadosCliente());
             var conta = new Conta(dadosDaConta.numero(), BigDecimal.ZERO, cliente);
 
-            String sql = "INSERT INTO conta (numero, saldo, cliente_nome, cliente_cpf, cliente_email) " +
+            String sql = " INSERT INTO conta (numero, saldo, cliente_nome, cliente_cpf, cliente_email) " +
                     " VALUES (?, ?, ?, ?, ?) ";
 
             try {
@@ -48,7 +48,7 @@ import java.util.Set;
             ResultSet resultSet;
             Set<Conta> contas = new HashSet<>();
 
-            String sql = "SELECT * FROM conta";
+            String sql = " SELECT * FROM conta ";
 
 
             try {
@@ -76,7 +76,7 @@ import java.util.Set;
         }
 
         public Conta listarPorNumero(Integer numero) {
-            String sql = "SELECT * FROM conta WHEHRE numero = ?";
+            String sql = " SELECT * FROM conta WHERE numero = ? ";
 
             PreparedStatement statement;
             ResultSet resultSet;
@@ -95,7 +95,7 @@ import java.util.Set;
 
                     DadosCadastroCliente dados = new DadosCadastroCliente(nome, cpf, email);
                     Cliente cliente = new Cliente(dados);
-
+                    conta = new Conta(numeroRecuperado, saldo, cliente);
                 }
                 resultSet.close();
                 statement.close();
@@ -104,5 +104,21 @@ import java.util.Set;
                 throw new RuntimeException(e);
             }
             return conta;
+        }
+
+        public void alterar(Integer numero, BigDecimal valor) {
+            PreparedStatement  statement;
+            String sql = "UPDATE conta SET saldo = ? WHERE numero = ? ";
+
+            try {
+                statement = conn.prepareStatement(sql);
+                statement.setBigDecimal(1, valor);
+                statement.setInt(2, numero);
+                statement.execute();
+                statement.close();
+                conn.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
     }

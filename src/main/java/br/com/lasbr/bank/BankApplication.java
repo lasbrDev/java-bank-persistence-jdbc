@@ -1,6 +1,5 @@
 package br.com.lasbr.bank;
 
-
 import br.com.lasbr.bank.domain.RegraDeNegocioException;
 import br.com.lasbr.bank.domain.account.Conta;
 import br.com.lasbr.bank.domain.account.ContaService;
