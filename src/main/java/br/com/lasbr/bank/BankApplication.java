@@ -19,7 +19,7 @@ import java.util.Set;
         public static void main(String[] args) {
 
             var opcao = exibirMenu();
-            while (opcao != 7) {
+            while (opcao != 8) {
                 try {
                     switch (opcao) {
                         case 1:
@@ -40,7 +40,9 @@ import java.util.Set;
                         case 6:
                             realizarDeposito();
                             break;
-                    }
+                        case 7:
+                            realizarTransferencia();
+                                            }
                 } catch (RegraDeNegocioException e) {
                     System.out.println("Erro: " +e.getMessage());
                     System.out.println("Pressione qualquer tecla e de ENTER para voltar ao menu.");
@@ -48,6 +50,21 @@ import java.util.Set;
                 }
                 opcao = exibirMenu();
             }
+        }
+
+        private static void realizarTransferencia() {
+            System.out.println("Digite o número da conta de origem:");
+            var numeroDaContaOrigem = sc.nextInt();
+
+            System.out.println("Digite o número da conta de destino:");
+            var numeroDaContaDestino = sc.nextInt();
+
+            System.out.println("Digite o valor a ser transferido:");
+            var valor = sc.nextBigDecimal();
+
+            service.realizarTransferencia(numeroDaContaOrigem, numeroDaContaDestino, valor);
+            System.out.println("Transferência realizada com sucesso!");
+            System.out.println("Pressione qualquer tecla e3 de Enter para voltar oa menu.");
         }
 
         private static void realizarDeposito() {
@@ -131,7 +148,8 @@ import java.util.Set;
                     4 -> Consultar saldo de uma conta
                     5 -> Realizar saque em uma conta
                     6 -> Realizar depósito em uma conta
-                    7 -> Sair
+                    7 -> Realizar Transferência
+                    8 -> Sair
                     """);
             return sc.nextInt();
         }
