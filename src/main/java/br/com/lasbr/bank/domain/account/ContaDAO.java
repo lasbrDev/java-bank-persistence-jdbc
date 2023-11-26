@@ -23,8 +23,8 @@ import java.util.Set;
             var cliente = new Cliente(dadosDaConta.dadosCliente());
             var conta = new Conta(dadosDaConta.numero(), BigDecimal.ZERO, cliente, true);
 
-            String sql = " INSERT INTO conta (numero, saldo, cliente_nome, cliente_cpf, cliente_email) " +
-                    " VALUES (?, ?, ?, ?, ?) ";
+            String sql = " INSERT INTO conta (numero, saldo, cliente_nome, cliente_cpf, cliente_email, esta_ativa) " +
+                    " VALUES (?, ?, ?, ?, ?, ?) ";
 
             try {
                 PreparedStatement statement = conn.prepareStatement(sql);
@@ -113,17 +113,29 @@ import java.util.Set;
         public void alterar(Integer numero, BigDecimal valor) {
             PreparedStatement  statement;
 
-            String sql = "UPDATE conta SET saldo = saldo + ? WHERE numero = ? ";
+            String sql = "UPDATE conta SET saldo = ? WHERE numero = ? ";
 
             try {
+                conn.setAutoCommit(false);
                 statement = conn.prepareStatement(sql);
                 statement.setBigDecimal(1, valor);
                 statement.setInt(2, numero);
                 statement.execute();
                 statement.close();
-                conn.close();
+                conn.commit();
             } catch (SQLException e) {
+                try {
+                    conn.rollback();
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
                 throw new RuntimeException(e);
+            } finally {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
             }
         }
 

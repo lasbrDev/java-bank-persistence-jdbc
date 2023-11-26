@@ -1,6 +1,7 @@
 package br.com.lasbr.bank.domain.account;
 
 import br.com.lasbr.bank.domain.costumer.Cliente;
+import br.com.lasbr.bank.util.SaldoFormatter;
 
 import java.math.BigDecimal;
 import java.util.Objects;
@@ -34,11 +35,15 @@ import java.util.Objects;
 
         @Override
         public String toString() {
-            return "Conta{" +
-                    "numero=" + numero +
-                    ", saldo=" + saldo +
-                    ", titular=" + titular +
-                    '}';
+            StringBuilder sb = new StringBuilder();
+            sb.append("Número da Conta: ").append(String.format("%06d", numero)).append(" | ");
+            sb.append("Titular Nome: ").append(titular.getNome()).append(" | ");
+            sb.append("Titular CPF: ").append((titular.getCpf())).append(" | ");
+            sb.append("Titular Email: ").append(titular.getEmail()).append(" | ");
+            BigDecimal saldoAtual = (saldo != null) ? saldo : BigDecimal.ZERO;
+            String saldoFormatado = SaldoFormatter.formatarSaldo(saldoAtual);
+            sb.append("Saldo: ").append(saldoFormatado);
+            return sb.toString();
         }
 
         public Integer getNumero() {

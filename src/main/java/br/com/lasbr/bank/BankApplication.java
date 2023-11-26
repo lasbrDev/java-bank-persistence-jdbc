@@ -5,6 +5,7 @@ import br.com.lasbr.bank.domain.account.Conta;
 import br.com.lasbr.bank.domain.account.ContaService;
 import br.com.lasbr.bank.domain.account.DadosAberturaConta;
 import br.com.lasbr.bank.domain.costumer.DadosCadastroCliente;
+import br.com.lasbr.bank.util.SaldoFormatter;
 
 import java.math.BigDecimal;
 import java.util.HashSet;
@@ -88,8 +89,8 @@ import java.util.Set;
             System.out.println("Digite o valor do saque:");
             var valor = sc.nextBigDecimal();
 
-            service.realizarSaque(numeroDaConta, valor);
-            System.out.println("Saque realizado com sucesso!");
+            String novoSaldoFormatado = SaldoFormatter.formatarSaldo(valor);
+            System.out.println("Saque realizado com sucesso! Novo saldo: " + novoSaldoFormatado);
             System.out.println("Pressione qualquer tecla e de ENTER para voltar ao menu principal.");
             sc.next();
         }
@@ -97,8 +98,8 @@ import java.util.Set;
         private static void consultarSaldo() {
             System.out.println("Digite o número da conta:");
             var numeroDaConta = sc.nextInt();
-            var saldo = service.consultarSaldo(numeroDaConta);
-            System.out.println("Saldo da conta: " +saldo);
+            String saldoFormatado = service.consultarSaldoFormatado(numeroDaConta);
+            System.out.println("Saldo da conta: " +saldoFormatado);
 
             System.out.println("Pressione qualquer tecla e de ENTER para voltar ao menu principal.");
             sc.next();

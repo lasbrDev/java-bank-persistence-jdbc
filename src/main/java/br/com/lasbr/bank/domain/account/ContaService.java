@@ -2,8 +2,10 @@ package br.com.lasbr.bank.domain.account;
 
 import br.com.lasbr.bank.ConnectionFactory;
 import br.com.lasbr.bank.domain.RegraDeNegocioException;
+import br.com.lasbr.bank.util.SaldoFormatter;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.sql.Connection;
 import java.util.Set;
 
@@ -94,12 +96,19 @@ import java.util.Set;
             }
 
             BigDecimal novoValor = conta.getSaldo().add(valor);
-            alterar(conta, valor);
+            novoValor = novoValor.setScale(2, RoundingMode.HALF_EVEN);
+            alterar(conta, novoValor);
         }
 
         public void realizarTransferencia(
                 Integer numeroDaContaOrigem, Integer numeroDaContaDestino, BigDecimal valor) {
             this.realizarSaque(numeroDaContaOrigem, valor);
             this.realizarDeposito(numeroDaContaDestino, valor);
+        }
+
+        public String consultarSaldoFormatado(Integer numeroDaConta) {
+            var conta = buscarContaPorNumero(numeroDaConta);
+            BigDecimal saldo = conta.getSaldo();
+            return SaldoFormatter.formatarSaldo(saldo);
         }
     }
